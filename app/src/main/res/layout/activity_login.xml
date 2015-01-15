@@ -14,6 +14,7 @@
         android:src="@drawable/logo_example"
         android:scaleType="centerInside"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         />
 
     <EditText

@@ -8,6 +8,7 @@ import org.androidannotations.annotations.rest.RestService;
 
 import pl.edu.ug.aib.firstApp.data.Person;
 import pl.edu.ug.aib.firstApp.data.PhoneBook;
+import pl.edu.ug.aib.firstApp.data.Picture;
 
 @EBean
 public class RestBackgroundTask {
@@ -23,6 +24,13 @@ public class RestBackgroundTask {
         try {
             restClient.setHeader("X-Dreamfactory-Application-Name", "phonebook");
             PhoneBook phoneBook = restClient.getPhoneBook();
+            // pobranie dla każdego rekordu obrazka, jeśli jest przypisany
+            for (Person person: phoneBook.records) {
+                if (person.pictureId != null) {
+                    Picture picture = restClient.getPictureById(person.pictureId);
+                    person.pictureBytes = picture.base64bytes;
+                }
+            }
             publishResult(phoneBook);
         } catch (Exception e) {
             publishError(e);
